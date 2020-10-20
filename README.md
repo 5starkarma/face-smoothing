@@ -15,3 +15,19 @@ Input Image             |  Output Image w/ Face Smoothing
 
 ---
 ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined.jpg?raw=true "Processing steps")
+
+## Install
+```
+git clone https://github.com/5starkarma/face-smoothing.git
+cd face-smoothing
+```
+## Run
+```
+python3 infer.py
+```
+
+### Flags
+```
+--input (Input file - default is hillary_clinton.jpg)
+--output (Output folder - default is data/output)
+--save_steps 'path/to/file.jpg' (Concats images from each step of the process and saves them)
