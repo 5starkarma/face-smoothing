@@ -28,20 +28,17 @@ def detect_face(net, input_file, conf_threshold):
     """
     # Load image
     img = load_image(input_file)
-    # Get image height and width
-    img_height = img.shape[0]
-    img_width = img.shape[1]
+    # Get height and width
+    img_height, img_width = img.shape[0], img.shape[1]
 
-    # Prepare image
+    # Prepare image for net
     blob = cv2.dnn.blobFromImage(img, 1.0, (200, 200), [104, 117, 123], False, False)
-
-    # Set the input for the network
+    # Set the input for the net
     net.setInput(blob)
-
     # Run a forward pass
     detections = net.forward()
 
-    # If detection is above threshold append to list, add to image
+    # If detection is above threshold append to list and draw to image
     bboxes = []
     for i in range(detections.shape[2]):
         confidence = detections[0, 0, i, 2]
