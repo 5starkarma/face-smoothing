@@ -1,5 +1,6 @@
 import argparse
 import yaml
+import time
 
 import cv2
 
@@ -57,6 +58,7 @@ def load_configs():
 
 
 def main(args):
+    tic = time.perf_counter()
     # Load project configurations
     cfg = load_configs()
     # Load the network
@@ -69,6 +71,8 @@ def main(args):
     # Detect face
     box_face, bboxes = detect_face(net, input_file, 
                                    cfg['net']['conf_threshold'])
+    toc = time.perf_counter()
+    print(f"Face detected in {toc - tic:0.4f} seconds")
     # Smooth face and return steps
     box_face, roi_img, hsv_mask, full_img = smooth_face(cfg, box_face, bboxes)
     # Save final image with bbox
