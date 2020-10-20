@@ -1,0 +1,9 @@
+net:
+    conf_threshold: 0.6
+    model_file: 'models/opencv_face_detector_uint8.pb'
+    cfg_file: 'models/opencv_face_detector.pbtxt'
+
+image:
+    hsv_low: !!python/tuple [0.,80.,80.]
+    hsv_high: !!python/tuple [200.,255.,255.]
+    output_with_bbox: 'output_with_bbox'

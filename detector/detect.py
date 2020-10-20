@@ -51,3 +51,6 @@ def detect_face(net, input_file, conf_threshold):
             cv2.rectangle(img, (x1, y1), (x2, y2), 
                           (0, 255, 0), int(round(img_height / 150)), 8)
     return img, bboxes
+
+
+
