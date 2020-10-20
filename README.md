@@ -27,3 +27,11 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
                  --output 'path/to/output_folder' (Output folder - default is data/output)
                  --save_steps 'path/to/file.jpg' (Concats images from each step of the process and saves them)
 ```
+
+## TODO
+- [ ] Fix combined output
+- [ ] Test on multiple faces
+- [ ] Video inference
+- [ ] Unit tests
+
+- [ ] 
