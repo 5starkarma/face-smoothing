@@ -1,4 +1,4 @@
-# Face Smoothing: Identifying and Smoothing Facial Skin
+# Face Smoothing: Face Detection and Smoothing
 
 OpenCV implementation of facial smoothing. 
 
