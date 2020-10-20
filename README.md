@@ -33,5 +33,5 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
 - [ ] Test on multiple faces
 - [ ] Video inference
 - [ ] Unit tests
-
-- [ ] 
+- [ ] Test better blurring techniques
+- [ ] Run time tests on units
