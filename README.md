@@ -23,7 +23,7 @@ cd face-smoothing
 ```
 ## Run
 ```
-python3 infer.py --input (Input file - default is hillary_clinton.jpg)
-                 --output (Output folder - default is data/output)
+python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hillary_clinton.jpg)
+                 --output 'path/to/output_folder' (Output folder - default is data/output)
                  --save_steps 'path/to/file.jpg' (Concats images from each step of the process and saves them)
 ```
