@@ -30,7 +30,11 @@ def save_image(output_dir, filename, img):
 
     Parameters
     ----------
+    output_dir : str
+        Name to save image as
     filename : str
+        Name to save image as
+    img : str
         Name to save image as
 
     Returns
@@ -44,3 +48,20 @@ def save_image(output_dir, filename, img):
         counter += 1
     filename = filename.format(counter)
     return cv2.imwrite(filename, img)
+
+
+def get_height_and_width(img):
+    """
+    Retrieve height and width of image
+
+    Parameters
+    ----------
+    img : np.array [H, W, 3]
+        RGB image
+
+    Returns
+    -------
+    image shape : int, int
+        height and width of image
+    """
+    return img.shape[0], img.shape[1]
