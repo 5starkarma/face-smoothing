@@ -12,7 +12,7 @@ image:
 
 filter:
     # Diameter of each pixel neighborhood
-    diameter: 15 
+    diameter: 15
     # Value of sigma in the color space. The greater the value, the colors farther to each other will start to get mixed.
-    sigma_1: 75
-    sigma_2: 75 
+    sigma_1: 50
+    sigma_2: 50

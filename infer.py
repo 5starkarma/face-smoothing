@@ -71,7 +71,8 @@ def main(args):
     # Load image
     img = load_image(input_file)
     # Detect face
-    box_face, bboxes = detect_face(net, input_file, 
+    box_face, bboxes = detect_face(net, 
+                                   input_file, 
                                    cfg['net']['conf_threshold'])
     # End measuring time
     toc = time.perf_counter()
