@@ -1,18 +1,21 @@
-# To change the effect of the smoothing play around with the filter values
+# To change the effect of the smoothing change the image and filter values
 
 net:
-    conf_threshold: 0.6
     model_file: 'models/opencv_face_detector_uint8.pb'
     cfg_file: 'models/opencv_face_detector.pbtxt'
+    conf_threshold: 0.6
 
 image:
+    # hsv range affects the skin region to be selected for filtering
     hsv_low: !!python/tuple [0.,80.,80.]
     hsv_high: !!python/tuple [200.,255.,255.]
+
     output_with_bbox: 'output_with_bbox'
 
 filter:
     # Diameter of each pixel neighborhood
     diameter: 15
+
     # Value of sigma in the color space. The greater the value, the colors farther to each other will start to get mixed.
     sigma_1: 50
     sigma_2: 50
