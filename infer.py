@@ -58,6 +58,8 @@ def load_configs():
 
 
 def main(args):
+    """Puts it all together."""
+    # Start measuring time
     tic = time.perf_counter()
     # Load project configurations
     cfg = load_configs()
@@ -71,6 +73,7 @@ def main(args):
     # Detect face
     box_face, bboxes = detect_face(net, input_file, 
                                    cfg['net']['conf_threshold'])
+    # End measuring time
     toc = time.perf_counter()
     print(f"Face detected in {toc - tic:0.4f} seconds")
     # Smooth face and return steps

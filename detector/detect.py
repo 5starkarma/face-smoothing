@@ -36,7 +36,7 @@ def detect_face(net, input_file, conf_threshold):
     net.setInput(blob)
     # Run a forward pass
     detections = net.forward()
-    
+    # Given all detections
     bboxes = []
     for i in range(detections.shape[2]):
         confidence = detections[0, 0, i, 2]

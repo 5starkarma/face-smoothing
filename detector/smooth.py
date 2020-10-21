@@ -3,6 +3,29 @@ import numpy as np
 
 
 def smooth_face(cfg, box_face, bboxes):
+    """
+    Smooth faces in an image using bilateral filtering.
+
+    Parameters
+    ----------
+    cfg : dict
+        Dictionary of configurations
+    box_face : np.array [H,W,3]
+        BGR image
+    bboxes : list
+        List of detected bounding boxes
+
+    Returns
+    -------
+    box_face : np.array [H,W,3]
+        BGR image
+    roi : np.array [H,W,3]
+        BGR image
+    full_mask : np.array [H,W,3]
+        BGR image
+    full_img : np.array [H,W,3]
+        BGR image
+    """
     # Get Region Of Interest of each face
     for i in range(len(bboxes)):
         print(f'Face detected: {bboxes[i]}')
@@ -18,7 +41,10 @@ def smooth_face(cfg, box_face, bboxes):
         # Make a 3 channel mask
         full_mask = cv2.merge((hsv_mask, hsv_mask, hsv_mask))
         # Apply blur on the created image
-        blurred_img = cv2.bilateralFilter(roi, 9, 75, 75)
+        blurred_img = cv2.bilateralFilter(roi, 
+                                          cfg['filter']['diameter'], 
+                                          cfg['filter']['sigma_1'], 
+                                          cfg['filter']['sigma_2'])
         # Apply mask to image
         masked_img = cv2.bitwise_and(blurred_img, full_mask)
         # Invert mask
