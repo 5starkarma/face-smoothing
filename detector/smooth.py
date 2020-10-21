@@ -30,4 +30,4 @@ def smooth_face(cfg, box_face, bboxes):
         # Replace ROI on full image with blurred ROI
         box_face[bboxes[i][1]:bboxes[i][3], 
                  bboxes[i][0]:bboxes[i][2]] = full_img
-    return box_face, roi_img, full_mask, full_img
+    return box_face, roi, full_mask, full_img
