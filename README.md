@@ -1,4 +1,4 @@
-# Face Smoothing: Face Detection and Smoothing
+# Face Smoothing: Detection and Beautification
 
 Input Image             |  Output Image w/ Face Smoothing
 :-------------------------:|:-------------------------:
