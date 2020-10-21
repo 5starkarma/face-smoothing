@@ -31,7 +31,7 @@ def parse_args():
                         type=str, 
                         help='Output file or folder',
                         default='data/output')
-    parser.add_argument('--save_steps', 
+    parser.add_argument('--save-steps', 
                         action='store_true',
                         help='Saves each step of the image.')
     args = parser.parse_args()
