@@ -9,13 +9,6 @@ OpenCV implementation of facial smoothing. Facial detection is done using an pre
 
 ---
 
-Input Image             |  Output Image w/ Face Smoothing
-:-------------------------:|:-------------------------:
-![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/images/hillary_clinton.jpg?raw=true "Input image")  |  ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/output_with_bbox0.jpg?raw=true "Output image")
-
----
-![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined.jpg?raw=true "Processing steps")
-
 ## Install
 ```
 git clone https://github.com/5starkarma/face-smoothing.git
@@ -27,6 +20,12 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
                  --output 'path/to/output_folder' (Output folder - default is data/output)
                  --save_steps 'path/to/file.jpg' (Concats images from each step of the process and saves them)
 ```
+Input Image             |  Output Image w/ Face Smoothing
+:-------------------------:|:-------------------------:
+![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/images/hillary_clinton.jpg?raw=true "Input image")  |  ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/output_with_bbox0.jpg?raw=true "Output image")
+
+---
+![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined.jpg?raw=true "Processing steps")
 
 ## TODO
 - [ ] Fix combined output
