@@ -44,9 +44,12 @@ def save_image(filename, img):
         True if image save was success
     """
     counter = 0
+    # Add brackets and extension to filename
     filename = filename + '{}.jpg'
+    # If a file of this name exists increase the counter by 1
     while os.path.isfile(filename.format(counter)):
         counter += 1
+    # Apply counter to filename
     filename = filename.format(counter)
     return cv2.imwrite(filename, img)
 

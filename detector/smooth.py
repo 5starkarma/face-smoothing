@@ -4,7 +4,7 @@ import numpy as np
 
 def get_roi(detected_img, bboxes, box_num):
     """
-    Crop detected image to size of bboxes
+    Crop detected image to size of detection
 
     Parameters
     ----------
