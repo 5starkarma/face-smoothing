@@ -105,6 +105,21 @@ def resize_image(image, width=None, height=None):
     return resized
 
 
+def check_img_size(img):
+    """
+    Verifies that the image is 360x540 or smaller
+    to help the detector find faces.
+    """
+    # Retrieve image size
+    height, width = img.shape[:2]
+    # If image h is > 720 or w is > 1080: resize
+    if height > 360 or width > 540:
+        resized_img = resize_image(img, 
+                                   width=360 if width > 360 else None, 
+                                   height=540 if height > 540 else None)
+    return resized_img
+
+
 def concat_imgs(imgs):
     """
     Concatenates tuple of images.

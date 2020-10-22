@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 from detector.detect import detect_face
 from detector.smooth import smooth_face
-from utils.image import load_image, save_image, save_steps
+from utils.image import load_image, save_image, save_steps, check_img_size
 
 
 def parse_args():
@@ -70,6 +70,8 @@ def main(args):
     input_file = args.input
     # Load image
     input_img = load_image(input_file)
+    # Make sure image is less than 1081px wide
+    input_img = check_img_size(input_img)
     # Detect face
     detected_img, bboxes = detect_face(net, 
                                        input_img, 
