@@ -28,9 +28,9 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
 ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined0.jpg?raw=true "Processing steps")
 
 ## TODO
-- [ ] Finish documentation and cleanup functions
+- [X] Finish documentation and cleanup functions
 - [ ] Reduce input image size for detections
-- [ ] Fix combined output
+- [X] Fix combined output
 - [X] Test on multiple faces
 - [X] Apply blurring on multiple faces
 - [ ] Apply different blurring techniques/advanced algo using facial landmarks to blur only skin regions
