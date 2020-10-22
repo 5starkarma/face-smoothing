@@ -25,7 +25,7 @@ def load_image(path):
     return cv2.imread(path)
 
 
-def save_image(output_dir, filename, img):
+def save_image(filename, img):
     """
     Save an image using OpenCV
 
@@ -44,7 +44,7 @@ def save_image(output_dir, filename, img):
         True if image save was success
     """
     counter = 0
-    filename = os.path.join(output_dir, filename + '{}.jpg')
+    filename = filename + '{}.jpg'
     while os.path.isfile(filename.format(counter)):
         counter += 1
     filename = filename.format(counter)
@@ -69,7 +69,25 @@ def get_height_and_width(img):
 
     
 def resize_image(image, width=None, height=None):
-    """source: *1* at bottom"""
+    """
+    Resize image with proportionate scaling. e.g. If 
+    only width is given, height will automatically 
+    proportionally scale.
+
+    Source
+    ------
+    https://stackoverflow.com/a/56859311/10796680
+
+    Parameters
+    ----------
+    img : np.array [H, W, 3]
+        RGB image
+
+    Returns
+    -------
+    image shape : int, int
+        height and width of image
+    """
     dim = None
     (h, w) = image.shape[:2]
     if width is None and height is None:
@@ -84,11 +102,49 @@ def resize_image(image, width=None, height=None):
     return resized
 
 
-def save_steps(img, box_face, roi_img, hsv_mask, full_img):
-    img = resize_image(img, height=300)
-    box_face = resize_image(box_face, height=300)
-    roi_img = resize_image(roi_img, height=300)
-    hsv_mask = resize_image(hsv_mask, height=300)
-    full_img = resize_image(full_img, height=300)
-    combined_imgs = np.concatenate((img, box_face, roi_img, hsv_mask, full_img), axis=1)
-    cv2.imwrite('/content/drive/My Drive/Colab Notebooks/face-smoothing/data/output/combined.jpg', combined_imgs)
+def concat_imgs(imgs):
+    """
+    Concatenates tuple of images.
+
+    Parameters
+    ----------
+    imgs : tuple
+        tuple of BGR images
+
+    Returns
+    -------
+    combined_img : BGR image
+        Image of horizontally stacked images
+    """
+    combined_img = np.concatenate(imgs, axis=1)
+    return combined_img
+
+def save_steps(filename, all_img_steps, output_height):
+    """
+    Resizes and concatenates tuple of images.
+
+    Parameters
+    ----------
+    filename : str
+        Output filename
+
+    all_img_steps : tuple
+        Tuple of BGR images
+
+    output_height : int
+        Height of output image
+
+    Returns
+    -------
+    img_saved : bool
+        True if successful save
+    """
+    # Map resized images
+    resized_imgs = tuple(resize_image(img, None, output_height) for img in all_img_steps)
+    # Concatenate images horizontally
+    combined_imgs = concat_imgs(resized_imgs)
+    # Save concatenated image
+    img_saved = save_image(filename, combined_imgs)
+    return img_saved
+
+

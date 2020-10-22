@@ -3,6 +3,7 @@
 net:
     model_file: 'models/opencv_face_detector_uint8.pb'
     cfg_file: 'models/opencv_face_detector.pbtxt'
+    
     conf_threshold: 0.6
 
 image:
@@ -11,6 +12,9 @@ image:
     hsv_high: !!python/tuple [200.,255.,255.]
 
     output_with_bbox: 'output_with_bbox'
+    output_steps: 'combined'
+
+    img_steps_height: 300
 
 filter:
     # Diameter of each pixel neighborhood

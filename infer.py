@@ -1,9 +1,9 @@
+import os
 import argparse
 import yaml
 import time
 
 import cv2
-
 import matplotlib
 import matplotlib.pyplot as plt
 
@@ -66,26 +66,29 @@ def main(args):
     # Load the network
     net = cv2.dnn.readNetFromTensorflow(cfg['net']['model_file'], 
                                         cfg['net']['cfg_file'])
-    # Input image
+    # Input and load image
     input_file = args.input
     # Load image
-    img = load_image(input_file)
+    input_img = load_image(input_file)
     # Detect face
-    box_face, bboxes = detect_face(net, 
-                                   input_file, 
-                                   cfg['net']['conf_threshold'])
+    detected_img, bboxes = detect_face(net, 
+                                       input_img, 
+                                       cfg['net']['conf_threshold'])
     # End measuring time
     toc = time.perf_counter()
     print(f"Face detected in {toc - tic:0.4f} seconds")
-    # Smooth face and return steps
-    box_face, roi_img, hsv_mask, full_img = smooth_face(cfg, box_face, bboxes)
+    # Smooth face and return steps // SHOULD BE ABLE TO HANDLE ANY SHAPE OF INPUT REGION
+    box_face, roi_img, hsv_mask, full_img = smooth_face(cfg, input_img, bboxes)
     # Save final image with bbox
-    img_saved = save_image(args.output, 
-                           cfg['image']['output_with_bbox'], 
-                           box_face)
+    output_filename = os.path.join(args.output, cfg['image']['output_with_bbox'])
+    img_saved = save_image(output_filename, box_face)
+
+    all_img_steps = (input_img, box_face, roi_img, hsv_mask, full_img)
+    output_height = cfg['image']['img_steps_height']
     # Save processing steps
     if args.save_steps:
-        save_steps(img, box_face, roi_img, hsv_mask, full_img)
+        output_steps_filename = os.path.join(args.output, cfg['image']['output_steps'])
+        save_steps(output_steps_filename, all_img_steps, output_height)
 
 
 if __name__ == '__main__':
