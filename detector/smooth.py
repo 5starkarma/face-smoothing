@@ -2,7 +2,21 @@ import cv2
 import numpy as np
 
 
-def smooth_face(cfg, box_face, bboxes):
+def get_roi(detected_img, bboxes, box_num):
+    """
+    Crop detected image to size of bboxes
+
+    Parameters
+    ----------
+    detected_img : np.array [H,W,3]
+        BGR image
+    bboxes : 
+    """
+    return detected_img[bboxes[box_num][1]:bboxes[box_num][3], 
+                        bboxes[box_num][0]:bboxes[box_num][2]]
+
+
+def smooth_face(cfg, detected_img, bboxes):
     """
     Smooth faces in an image using bilateral filtering.
 
@@ -17,8 +31,8 @@ def smooth_face(cfg, box_face, bboxes):
 
     Returns
     -------
-    box_face : np.array [H,W,3]
-        BGR image
+    detected_img : np.array [H,W,3]
+        BGR image with face detections
     roi : np.array [H,W,3]
         BGR image
     full_mask : np.array [H,W,3]
@@ -27,9 +41,10 @@ def smooth_face(cfg, box_face, bboxes):
         BGR image
     """
     # Get Region Of Interest of each face
-    for i in range(len(bboxes)):
-        print(f'Face detected: {bboxes[i]}')
-        roi = box_face[bboxes[i][1]:bboxes[i][3], bboxes[i][0]:bboxes[i][2]]
+    for box_num in range(len(bboxes)):
+        print(f'Face detected: {bboxes[box_num]}')
+        # Get Region of Interest
+        roi = get_roi(detected_img, bboxes, box_num)
         # Copy ROI
         temp_img = roi.copy()
         # Convert roi_img to HSV colorspace
@@ -53,7 +68,9 @@ def smooth_face(cfg, box_face, bboxes):
         masked_img2 = cv2.bitwise_and(temp_img, inverted_mask)
         # Add the masked images together
         full_img = cv2.add(masked_img2, masked_img)
+        # Init smoothed image
+        smoothed_img = detected_img.copy()
         # Replace ROI on full image with blurred ROI
-        box_face[bboxes[i][1]:bboxes[i][3], 
-                 bboxes[i][0]:bboxes[i][2]] = full_img
-    return box_face, roi, full_mask, full_img
+        smoothed_img[bboxes[box_num][1]:bboxes[box_num][3], 
+                     bboxes[box_num][0]:bboxes[box_num][2]] = full_img
+    return smoothed_img, roi, full_mask, full_img
