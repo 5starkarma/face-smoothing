@@ -29,6 +29,7 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
 
 ## TODO
 - [ ] Finish documentation and cleanup functions
+- [ ] Reduce input image size for detections
 - [ ] Fix combined output
 - [X] Test on multiple faces
 - [X] Apply blurring on multiple faces
