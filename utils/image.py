@@ -51,6 +51,7 @@ def save_image(filename, img):
         counter += 1
     # Apply counter to filename
     filename = filename.format(counter)
+    # Save file
     return cv2.imwrite(filename, img)
 
 
@@ -101,7 +102,9 @@ def resize_image(image, width=None, height=None):
     else:
         r = width / float(w)
         dim = (width, int(h * r))
-    resized = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
+    resized = cv2.resize(image, 
+                         dim, 
+                         interpolation=cv2.INTER_AREA)
     return resized
 
 
@@ -112,7 +115,7 @@ def check_img_size(img):
     """
     # Retrieve image size
     height, width = img.shape[:2]
-    # If image h is > 720 or w is > 1080: resize
+    # If image h is > 720 or w is > 1080, resize
     if height > 720 or width > 1080:
         resized_img = resize_image(img, 
                                    width=720 if width > 720 else None, 
@@ -134,8 +137,8 @@ def concat_imgs(imgs):
     combined_img : BGR image
         Image of horizontally stacked images
     """
-    combined_img = np.concatenate(imgs, axis=1)
-    return combined_img
+    # Horizontally concatenate images
+    return np.concatenate(imgs, axis=1)
 
 def save_steps(filename, all_img_steps, output_height):
     """
@@ -158,11 +161,11 @@ def save_steps(filename, all_img_steps, output_height):
         True if successful save
     """
     # Map resized images
-    resized_imgs = tuple(resize_image(img, None, output_height) for img in all_img_steps)
+    resized_imgs = tuple(resize_image(img, None, output_height) 
+                                      for img in all_img_steps)
     # Concatenate images horizontally
     combined_imgs = concat_imgs(resized_imgs)
     # Save concatenated image
-    img_saved = save_image(filename, combined_imgs)
-    return img_saved
+    return save_image(filename, combined_imgs)
 
 
