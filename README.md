@@ -29,11 +29,11 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
 
 ## TODO
 - [X] Finish documentation and cleanup functions
-- [ ] Reduce input image size for detections
+- [X] Reduce input image size for detections
 - [X] Fix combined output
 - [X] Test on multiple faces
 - [X] Apply blurring on multiple faces
-- [ ] Apply different blurring techniques/advanced algo using facial landmarks to blur only skin regions
 - [ ] Video inference
+- [ ] Apply different blurring techniques/advanced algo using facial landmarks to blur only skin regions
 - [ ] Unit tests
 - [ ] Run time tests on units
