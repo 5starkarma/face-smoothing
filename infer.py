@@ -80,12 +80,12 @@ def main(args):
     toc = time.perf_counter()
     print(f"Face detected in {toc - tic:0.4f} seconds")
     # Smooth face and return steps // SHOULD BE ABLE TO HANDLE ANY SHAPE OF INPUT REGION
-    smoothed_face, roi_img, hsv_mask, full_img = smooth_face(cfg, input_img, bboxes)
+    output_img, roi_img, hsv_mask, smoothed_roi = smooth_face(cfg, input_img, bboxes)
     # Save final image without bbox
     output_filename = os.path.join(args.output, cfg['image']['output'])
-    img_saved = save_image(output_filename, smoothed_face)
+    img_saved = save_image(output_filename, output_img)
 
-    all_img_steps = (input_img, detected_img, roi_img, hsv_mask, full_img, smoothed_face)
+    all_img_steps = (input_img, detected_img, roi_img, hsv_mask, smoothed_roi, output_img)
     output_height = cfg['image']['img_steps_height']
     # Save processing steps
     if args.save_steps:
