@@ -1,6 +1,6 @@
 # Face Smoothing: Detection and Beautification
 
-Input Image             |  Output Image w/ Face Smoothing
+Input Image             |  Output Image w/ Facial Smoothing
 :-------------------------:|:-------------------------:
 ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/images/hillary_clinton.jpg?raw=true "Input image")  |  ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/output_0.jpg?raw=true "Output image")
 ---
