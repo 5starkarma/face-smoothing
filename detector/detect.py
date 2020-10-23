@@ -6,7 +6,7 @@ import cv2
 from utils.image import load_image, get_height_and_width
 
 
-def detect_face(net, input_img, conf_threshold):
+def detect_face(cfg, net, input_img, conf_threshold):
     """
     Detects face in an image.
 
@@ -29,7 +29,12 @@ def detect_face(net, input_img, conf_threshold):
     # Get height and width
     img_height, img_width = get_height_and_width(input_img)
     # Prepare image for net
-    blob = cv2.dnn.blobFromImage(input_img, 1.0, (200, 200), [104, 117, 123], False, False)
+    blob = cv2.dnn.blobFromImage(input_img, 
+                                 1.0, 
+                                 cfg['image']['size'], 
+                                 cfg['image']['mean'], 
+                                 False, 
+                                 False)
     # Set the input for the net and run forward pass
     net.setInput(blob)
     detections = net.forward()
@@ -46,9 +51,11 @@ def detect_face(net, input_img, conf_threshold):
             bboxes.append([x1, y1, x2, y2])
             # Draw bbox to image
             detected_img = cv2.rectangle(input_img.copy(), 
-                                         (x1, y1), (x2, y2), 
-                                         (0, 255, 0), 
-                                         int(round(img_height / 150)), 8)
+                                         (x1, y1), 
+                                         (x2, y2), 
+                                         cfg['image']['bbox_color'], 
+                                         int(round(img_height / 150)), 
+                                         8)
     return detected_img, bboxes
 
 

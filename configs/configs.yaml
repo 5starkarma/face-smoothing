@@ -11,8 +11,15 @@ image:
     hsv_low: !!python/tuple [0.,80.,80.]
     hsv_high: !!python/tuple [200.,255.,255.]
 
+    # BlobFromImage settings
+    mean: [104, 117, 123]
+    size: !!python/tuple [200, 200]
+
+    # Output image filenames
     output: 'output_'
     output_steps: 'combined_'
+
+    bbox_color: !!python/tuple [0, 255, 0]
 
     img_steps_height: 300
 

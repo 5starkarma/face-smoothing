@@ -73,7 +73,8 @@ def main(args):
     # Make sure image is less than 1081px wide
     input_img = check_img_size(input_img)
     # Detect face
-    detected_img, bboxes = detect_face(net, 
+    detected_img, bboxes = detect_face(cfg,
+                                       net, 
                                        input_img, 
                                        cfg['net']['conf_threshold'])
     # End measuring time
