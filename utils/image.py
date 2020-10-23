@@ -113,10 +113,10 @@ def check_img_size(img):
     # Retrieve image size
     height, width = img.shape[:2]
     # If image h is > 720 or w is > 1080: resize
-    if height > 360 or width > 540:
+    if height > 720 or width > 1080:
         resized_img = resize_image(img, 
-                                   width=360 if width > 360 else None, 
-                                   height=540 if height > 540 else None)
+                                   width=720 if width > 720 else None, 
+                                   height=1080 if height > 1080 else None)
     return resized_img
 
 
