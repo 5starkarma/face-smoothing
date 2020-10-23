@@ -2,7 +2,7 @@
 
 Input Image             |  Output Image w/ Facial Smoothing
 :-------------------------:|:-------------------------:
-![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/images/hillary_clinton.jpg?raw=true "Input image")  |  ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/output.jpg?raw=true "Output image")
+![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/images/hillary_clinton.jpg?raw=true "Input image")  |  ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/output_0.jpg?raw=true "Output image")
 ---
 OpenCV implementation of facial smoothing. Facial detection is done using an pretrained TensorFlow face detection model. Facial smoothing is accomplished using the following steps:
 
@@ -25,7 +25,7 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
                  --save_steps 'path/to/file.jpg' (Concats images from each step of the process and saves them)
 ```
 #### Example: --save-steps flag
-![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined.jpg?raw=true "Processing steps")
+![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined_0.jpg?raw=true "Processing steps")
 
 ## TODO
 - [X] Finish documentation and cleanup functions
