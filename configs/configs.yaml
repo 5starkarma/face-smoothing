@@ -11,8 +11,8 @@ image:
     hsv_low: !!python/tuple [0.,80.,80.]
     hsv_high: !!python/tuple [200.,255.,255.]
 
-    output_with_bbox: 'output_with_bbox'
-    output_steps: 'combined'
+    output: 'output_'
+    output_steps: 'combined_'
 
     img_steps_height: 300
 

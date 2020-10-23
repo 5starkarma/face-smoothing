@@ -45,7 +45,7 @@ def detect_face(net, input_img, conf_threshold):
             y2 = int(detections[0, 0, i, 6] * img_height)
             bboxes.append([x1, y1, x2, y2])
             # Draw bbox to image
-            detected_img = cv2.rectangle(input_img, 
+            detected_img = cv2.rectangle(input_img.copy(), 
                                          (x1, y1), (x2, y2), 
                                          (0, 255, 0), 
                                          int(round(img_height / 150)), 8)
