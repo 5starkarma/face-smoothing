@@ -14,15 +14,15 @@ def detect_face(net, input_img, conf_threshold):
     ----------
     net : dnn model
         cv2.dnn model
-    input_file : str
-        Image file
+    input_file : np.array [H,W,3]
+        Input BGR image
     conf_threshold : float
         Detection confidence threshold
 
     Returns
     -------
     detected_img : np.array [H,W,3]
-        RGB image
+        BGR image
     bboxes : list
         Bounding box coordinates
     """
