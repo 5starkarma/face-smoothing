@@ -117,10 +117,10 @@ def check_img_size(img):
     height, width = img.shape[:2]
     # If image h is > 720 or w is > 1080, resize
     if height > 720 or width > 1080:
-        resized_img = resize_image(img, 
-                                   width=720 if width > 720 else None, 
-                                   height=1080 if height > 1080 else None)
-    return resized_img
+        img = resize_image(img, 
+                           width=720 if width > 720 else None, 
+                           height=1080 if height > 1080 else None)
+    return img
 
 
 def concat_imgs(imgs):
