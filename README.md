@@ -25,7 +25,7 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
                  --save_steps 'path/to/file.jpg' (Concats images from each step of the process and saves them)
 ```
 #### Example: --save-steps flag
-![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined_0.jpg?raw=true "Processing steps")
+![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined.jpg?raw=true "Processing steps")
 
 ## TODO
 - [X] Finish documentation and cleanup functions
@@ -34,7 +34,7 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
 - [X] Test on multiple faces
 - [X] Apply blurring on multiple faces
 - [X] Video inference
-- [ ] Save bounding box to output
+- [X] Save bounding box to output
 - [ ] Apply different blurring techniques/advanced algo using facial landmarks to blur only skin regions
 - [ ] Unit tests
 - [ ] Run time tests on units
