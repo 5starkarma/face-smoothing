@@ -23,6 +23,7 @@ cd face-smoothing
 python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hillary_clinton.jpg)
                  --output 'path/to/output_folder' (Output folder - default is data/output)
                  --save_steps 'path/to/file.jpg' (Concats images from each step of the process and saves them)
+                 --show-detections (Saves bounding box detections to output)
 ```
 #### Example: --save-steps flag
 ![alt text](https://github.com/5starkarma/face-smoothing/blob/main/data/output/combined_0.jpg?raw=true "Processing steps")
