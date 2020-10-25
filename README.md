@@ -20,7 +20,9 @@ cd face-smoothing
 ```
 ## Run
 ```
-python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hillary_clinton.jpg)
+python3 infer.py --input 'path/to/input_file.jpg' (Input file - image, video, or folder with images and/or videos - default is hillary_clinton.jpg)
+                         'can/handle/videos.mp4'
+                         'as/well/as/directories'
                  --output 'path/to/output_folder' (Output folder - default is data/output)
                  --save_steps 'path/to/file.jpg' (Concats images from each step of the process and saves them)
                  --show-detections (Saves bounding box detections to output)
