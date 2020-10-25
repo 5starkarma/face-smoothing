@@ -15,9 +15,6 @@ def make_temp_dir(file):
     if not os.path.isdir(temp_dir):
         os.mkdir(temp_dir)
 
-def remove_temp_dir(dir):
-    pass
-
 def split_video(file):
     cap = cv2.VideoCapture(file)
     if cap.isOpened():
@@ -27,6 +24,4 @@ def split_video(file):
             images.append(frame)
             success, frame = cap.read()
     return images
-
-
     

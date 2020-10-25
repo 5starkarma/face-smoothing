@@ -19,7 +19,7 @@ image:
     output: 'output_'
     output_steps: 'combined_'
 
-    bbox_color: !!python/tuple [0, 255, 0]
+    bbox_color: !!python/tuple [255, 204, 102]
 
     img_steps_height: 300
 
