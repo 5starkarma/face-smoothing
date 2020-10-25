@@ -34,7 +34,7 @@ python3 infer.py --input 'path/to/input_file.jpg' (Input file - default is hilla
 - [X] Test on multiple faces
 - [X] Apply blurring on multiple faces
 - [X] Video inference
-- [ ] Save bounding box to output
+- [X] Save bounding box to output
 - [ ] Apply different blurring techniques/advanced algo using facial landmarks to blur only skin regions
 - [ ] Unit tests
 - [ ] Run time tests on units
