@@ -14,7 +14,8 @@ from utils.image import (load_image,
                          save_steps, 
                          check_img_size,
                          get_height_and_width,
-                         process_image)
+                         process_image,
+                         check_if_adding_bboxes)
 from utils.video import (split_video,
                          process_video)
 from utils.types import (is_image,
@@ -68,32 +69,6 @@ def load_configs():
     with open('/content/drive/My Drive/Colab Notebooks/face-smoothing'\
                '/configs/configs.yaml', 'r') as file:
         return yaml.load(file, Loader=yaml.FullLoader)
-
-
-def check_if_adding_bboxes(args, img_steps):
-    """
-    Check if --show-detections flag is given. 
-    If it is, return the image with bboxes.
-
-    Parameters
-    ----------
-    args : Namespace object
-        ArgumentParser
-
-    img_steps : tuple
-        Tuple of image steps
-
-    Returns
-    -------
-    configs : dict
-        A dictionary containing the configs
-    """
-    # If --show-detections flag show image w/ bboxes
-    if args.show_detections:
-        return img_steps[5]
-    else:
-        return img_steps[6]
-
 
 
 def main(args):

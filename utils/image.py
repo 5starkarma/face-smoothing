@@ -241,3 +241,28 @@ def process_image(input_img, cfg, net):
             smoothed_roi, output_w_bboxes, output_img)
 
 
+def check_if_adding_bboxes(args, img_steps):
+    """
+    Check if --show-detections flag is given. 
+    If it is, return the image with bboxes.
+
+    Parameters
+    ----------
+    args : Namespace object
+        ArgumentParser
+
+    img_steps : tuple
+        Tuple of image steps
+
+    Returns
+    -------
+    configs : dict
+        A dictionary containing the configs
+    """
+    # If --show-detections flag show image w/ bboxes
+    if args.show_detections:
+        return img_steps[5]
+    else:
+        return img_steps[6]
+
+

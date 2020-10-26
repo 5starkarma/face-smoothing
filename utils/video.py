@@ -2,6 +2,8 @@ import os
 
 import cv2
 
+from .image import check_if_adding_bboxes
+
 
 def delete_video(file):
     return os.remove(file)
@@ -66,8 +68,7 @@ def process_video(file, output_dir, cfg, net):
     # Apply counter to filename
     output_path = filename.format(counter)
     # Get height and width of 1st image
-    input_img = check_img_size(images[0])
-    height, width, _ = input_img.shape  
+    height, width, _  = check_img_size(images[0]).shape
     # Create VideoWriter object
     video = cv2.VideoWriter(output_path, 
                             cv2.VideoWriter_fourcc(*'FMP4'), 
@@ -76,11 +77,8 @@ def process_video(file, output_dir, cfg, net):
     for image in images:
         # Process frames
         _, _, _, _, _, output_w_bboxes, output_img = process_image(image, cfg, net)
-        # If --show-detections flag, use frames w/ bboxes
-        if args.show_detections:
-            video.write(output_w_bboxes)
-        else:
-            video.write(output_img)  
+        # Check for --show-detections flag
+        output_img = check_if_adding_bboxes(args, img_steps)        
     # Release video writer object
     video.release()
 
