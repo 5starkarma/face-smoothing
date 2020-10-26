@@ -69,14 +69,33 @@ def load_configs():
 
 
 def draw_bboxes(output_img, cfg, bboxes):
-    # Draw bbox on output_img
+    """
+    Draw bounding boxes on an image.
+
+    Parameters
+    ----------
+    output_img : np.array [H,W,3]
+        BGR image of face
+
+    cfg : dict
+        Dictionary of configurations
+
+    bboxes : list [[x1, y1, x2, y2],...]
+        List of lists of bbox coordinates
+
+    Returns
+    -------
+    image : np.array [H,W,3]
+        BGR image with bounding boxes
+    """
+    # Create copy of image
     output_w_bboxes = output_img.copy()
     # Get height and width
     img_height, img_width = get_height_and_width(output_w_bboxes)
-    for box_num in range(len(bboxes)):
-        top_left, btm_right = (bboxes[box_num][0], 
-                               bboxes[box_num][1]), (bboxes[box_num][2], 
-                                                     bboxes[box_num][3])
+    # Draw bboxes
+    for i in range(len(bboxes)):
+        top_left = (bboxes[i][0], bboxes[i][1])
+        btm_right = (bboxes[i][2], bboxes[i][3])
         cv2.rectangle(output_w_bboxes, 
                       top_left, 
                       btm_right, 
@@ -86,6 +105,25 @@ def draw_bboxes(output_img, cfg, bboxes):
 
 
 def process_image(input_img, cfg, net):
+    """
+    Draw bounding boxes on an image.
+
+    Parameters
+    ----------
+    output_img : np.array [H,W,3]
+        BGR image of face
+
+    cfg : dict
+        Dictionary of configurations
+
+    bboxes : list [[x1, y1, x2, y2],...]
+        List of lists of bbox coordinates
+
+    Returns
+    -------
+    images : tuple
+        Tuple of BGR images
+    """
     # Make sure image is less than 1081px wide
     input_img = check_img_size(input_img)
     # Detect face
@@ -101,6 +139,32 @@ def process_image(input_img, cfg, net):
 
 
 def process_video(file, output_dir, cfg, net):
+    """
+    Splits video into frames then processes each frame individually
+    before merging all the frames back into a video.
+
+    Parameters
+    ----------
+    file : H.264 video
+        Input video
+
+    output_dir : str
+        Output directory where processed video will be saved
+
+    cfg : dict
+        Dictionary of configurations
+
+    net : Neural Network object
+        Pre-trained model ready for foward pass
+
+    bboxes : list [[x1, y1, x2, y2],...]
+        List of lists of bbox coordinates
+
+    Returns
+    -------
+    images : tuple
+        Tuple of BGR images
+    """
     # Split video into frames
     images = split_video(file)
     # Add brackets and extension to filename
