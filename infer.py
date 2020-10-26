@@ -13,8 +13,10 @@ from utils.image import (load_image,
                          save_image, 
                          save_steps, 
                          check_img_size,
-                         get_height_and_width)
-from utils.video import split_video
+                         get_height_and_width,
+                         process_image)
+from utils.video import (split_video,
+                         process_video)
 from utils.types import (is_image,
                          is_video,
                          is_directory)
@@ -66,133 +68,6 @@ def load_configs():
     with open('/content/drive/My Drive/Colab Notebooks/face-smoothing'\
                '/configs/configs.yaml', 'r') as file:
         return yaml.load(file, Loader=yaml.FullLoader)
-
-
-def draw_bboxes(output_img, cfg, bboxes):
-    """
-    Draw bounding boxes on an image.
-
-    Parameters
-    ----------
-    output_img : np.array [H,W,3]
-        BGR image of face
-
-    cfg : dict
-        Dictionary of configurations
-
-    bboxes : list [[x1, y1, x2, y2],...]
-        List of lists of bbox coordinates
-
-    Returns
-    -------
-    image : np.array [H,W,3]
-        BGR image with bounding boxes
-    """
-    # Create copy of image
-    output_w_bboxes = output_img.copy()
-    # Get height and width
-    img_height, img_width = get_height_and_width(output_w_bboxes)
-    # Draw bboxes
-    for i in range(len(bboxes)):
-        top_left = (bboxes[i][0], bboxes[i][1])
-        btm_right = (bboxes[i][2], bboxes[i][3])
-        cv2.rectangle(output_w_bboxes, 
-                      top_left, 
-                      btm_right, 
-                      cfg['image']['bbox_color'], 
-                      2)
-    return output_w_bboxes        
-
-
-def process_image(input_img, cfg, net):
-    """
-    Draw bounding boxes on an image.
-
-    Parameters
-    ----------
-    output_img : np.array [H,W,3]
-        BGR image of face
-
-    cfg : dict
-        Dictionary of configurations
-
-    bboxes : list [[x1, y1, x2, y2],...]
-        List of lists of bbox coordinates
-
-    Returns
-    -------
-    images : tuple
-        Tuple of BGR images
-    """
-    # Make sure image is less than 1081px wide
-    input_img = check_img_size(input_img)
-    # Detect face
-    detected_img, bboxes = detect_face(cfg, net, input_img)
-    # Smooth face and return steps
-    output_img, roi_img, hsv_mask, smoothed_roi = smooth_face(cfg, 
-                                                              input_img, 
-                                                              bboxes)
-    # Draw bboxes on output_img
-    output_w_bboxes = draw_bboxes(output_img, cfg, bboxes)
-    return (input_img, detected_img, roi_img, hsv_mask, 
-            smoothed_roi, output_w_bboxes, output_img)
-
-
-def process_video(file, output_dir, cfg, net):
-    """
-    Splits video into frames then processes each frame individually
-    before merging all the frames back into a video.
-
-    Parameters
-    ----------
-    file : H.264 video
-        Input video
-
-    output_dir : str
-        Output directory where processed video will be saved
-
-    cfg : dict
-        Dictionary of configurations
-
-    net : Neural Network object
-        Pre-trained model ready for foward pass
-
-    bboxes : list [[x1, y1, x2, y2],...]
-        List of lists of bbox coordinates
-
-    Returns
-    -------
-    images : tuple
-        Tuple of BGR images
-    """
-    # Split video into frames
-    images = split_video(file)
-    # Add brackets and extension to filename
-    filename = os.path.join(output_dir, cfg['video']['output']) + '{}.mp4'
-    # If a file of this name exists increase the counter by 1
-    counter = 0
-    while os.path.isfile(filename.format(counter)):
-        counter += 1
-    # Apply counter to filename
-    output_path = filename.format(counter)
-    # Get height and width of 1st image
-    input_img = check_img_size(images[0])
-    height, width, _ = input_img.shape  
-    # Create VideoWriter object
-    video = cv2.VideoWriter(output_path, 
-                            cv2.VideoWriter_fourcc(*'FMP4'), 
-                            30, 
-                            (width,height))
-    for image in images:
-        # Process frames
-        _, _, _, _, _, output_w_bboxes, output_img = process_image(image, cfg, net)
-        # If --show-detections flag, use frames w/ bboxes
-        if args.show_detections:
-            video.write(output_w_bboxes)
-        else:
-            video.write(output_img)  
-    # Release video writer object
-    video.release()
 
 
 def main(args):

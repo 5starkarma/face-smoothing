@@ -3,9 +3,11 @@
 # System imports
 import os
 
-#Third-party imports
+# Third-party imports
 import cv2
 import numpy as np
+
+from detector import detect, smooth
 
 
 def load_image(path):
@@ -167,5 +169,75 @@ def save_steps(filename, all_img_steps, output_height):
     combined_imgs = concat_imgs(resized_imgs)
     # Save concatenated image
     return save_image(filename, combined_imgs)
+
+
+def draw_bboxes(output_img, cfg, bboxes):
+    """
+    Draw bounding boxes on an image.
+
+    Parameters
+    ----------
+    output_img : np.array [H,W,3]
+        BGR image of face
+
+    cfg : dict
+        Dictionary of configurations
+
+    bboxes : list [[x1, y1, x2, y2],...]
+        List of lists of bbox coordinates
+
+    Returns
+    -------
+    image : np.array [H,W,3]
+        BGR image with bounding boxes
+    """
+    # Create copy of image
+    output_w_bboxes = output_img.copy()
+    # Get height and width
+    img_height, img_width = get_height_and_width(output_w_bboxes)
+    # Draw bboxes
+    for i in range(len(bboxes)):
+        top_left = (bboxes[i][0], bboxes[i][1])
+        btm_right = (bboxes[i][2], bboxes[i][3])
+        cv2.rectangle(output_w_bboxes, 
+                      top_left, 
+                      btm_right, 
+                      cfg['image']['bbox_color'], 
+                      2)
+    return output_w_bboxes        
+
+
+def process_image(input_img, cfg, net):
+    """
+    Draw bounding boxes on an image.
+
+    Parameters
+    ----------
+    output_img : np.array [H,W,3]
+        BGR image of face
+
+    cfg : dict
+        Dictionary of configurations
+
+    bboxes : list [[x1, y1, x2, y2],...]
+        List of lists of bbox coordinates
+
+    Returns
+    -------
+    images : tuple
+        Tuple of BGR images
+    """
+    # Make sure image is less than 1081px wide
+    input_img = check_img_size(input_img)
+    # Detect face
+    detected_img, bboxes = detect.detect_face(cfg, net, input_img)
+    # Smooth face and return steps
+    output_img, roi_img, hsv_mask, smoothed_roi = smooth.smooth_face(cfg, 
+                                                              input_img, 
+                                                              bboxes)
+    # Draw bboxes on output_img
+    output_w_bboxes = draw_bboxes(output_img, cfg, bboxes)
+    return (input_img, detected_img, roi_img, hsv_mask, 
+            smoothed_roi, output_w_bboxes, output_img)
 
 
