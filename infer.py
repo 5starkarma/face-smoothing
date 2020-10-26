@@ -70,6 +70,32 @@ def load_configs():
         return yaml.load(file, Loader=yaml.FullLoader)
 
 
+def check_if_adding_bboxes(args, img_steps):
+    """
+    Check if --show-detections flag is given. 
+    If it is, return the image with bboxes.
+
+    Parameters
+    ----------
+    args : Namespace object
+        ArgumentParser
+
+    img_steps : tuple
+        Tuple of image steps
+
+    Returns
+    -------
+    configs : dict
+        A dictionary containing the configs
+    """
+    # If --show-detections flag show image w/ bboxes
+    if args.show_detections:
+        return img_steps[5]
+    else:
+        return img_steps[6]
+
+
+
 def main(args):
     """Puts it all together."""
     # Start measuring time
@@ -93,14 +119,13 @@ def main(args):
             # Load image
             input_img = load_image(input_file)
             # Process image
-            all_img_steps = process_image(input_img, cfg, net)
+            img_steps = process_image(input_img, cfg, net)
             # Save final image to specified output filename
-            output_filename = os.path.join(args.output, cfg['image']['output'])
-            if args.show_detections:
-                output_img = all_img_steps[5]
-            else:
-                output_img = all_img_steps[6]
-            img_saved = save_image(output_filename, output_img)
+            out_filename = os.path.join(args.output, cfg['image']['output'])
+            # Check for --show-detections flag
+            output_img = check_if_adding_bboxes(args, img_steps)
+            # Save image
+            img_saved = save_image(out_filename, output_img)
 
         # If input_file is a dir
         elif is_directory(input_file):
@@ -112,20 +137,18 @@ def main(args):
                 if is_video(file):
                     # Process video
                     process_video(file, args.output, cfg, net)
-
+                # If file is a compatible image file    
                 if is_image(file):
                     # Load image
                     input_img = load_image(file)
                     # Process image
                     all_img_steps = process_image(input_img, cfg, net)
                     # Save final image to specified output filename
-                    output_filename = os.path.join(args.output, 
-                                                   cfg['image']['output'])
-                    if args.show_detections:
-                        output_img = all_img_steps[5]
-                    else:
-                        output_img = all_img_steps[6]
-                    img_saved = save_image(output_filename, output_img)
+                    out_filename = os.path.join(args.output, cfg['image']['output'])
+                     # Check for --show-detections flag
+                    output_img = check_if_adding_bboxes(args, img_steps)
+                    # Save image
+                    img_saved = save_image(out_filename, output_img)
 
     except ValueError:
         print('Input must be a valid image, video, or directory.')
@@ -133,9 +156,8 @@ def main(args):
     # Save processing steps
     if args.save_steps:
         output_height = cfg['image']['img_steps_height']
-        output_steps_filename = os.path.join(args.output, 
-                                             cfg['image']['output_steps'])
-        save_steps(output_steps_filename, all_img_steps, output_height)
+        steps_filename = os.path.join(args.output, cfg['image']['output_steps'])
+        save_steps(steps_filename, img_steps, output_height)
 
     # End measuring time
     toc = time.perf_counter()
