@@ -3,7 +3,7 @@
 
 import cv2
 
-import utils.image as im
+from utils import image
 
 
 def detect_face(cfg, net, input_img):
@@ -27,7 +27,7 @@ def detect_face(cfg, net, input_img):
         Bounding box coordinates
     """
     # Get height and width
-    img_height, img_width = im.get_height_and_width(input_img)
+    img_height, img_width = image.get_height_and_width(input_img)
     # Prepare image for net
     blob = cv2.dnn.blobFromImage(input_img, 
                                  1.0, 
