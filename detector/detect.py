@@ -3,7 +3,7 @@
 
 import cv2
 
-from utils.image import load_image, get_height_and_width
+from utils.image import get_height_and_width
 
 
 def detect_face(cfg, net, input_img):
