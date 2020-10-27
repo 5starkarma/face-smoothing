@@ -117,7 +117,7 @@ def main(args):
                     # Load image
                     input_img = load_image(file)
                     # Process image
-                    all_img_steps = process_image(input_img, cfg, net)
+                    img_steps = process_image(input_img, cfg, net)
                     # Save final image to specified output filename
                     out_filename = os.path.join(args.output, cfg['image']['output'])
                      # Check for --show-detections flag
@@ -130,8 +130,11 @@ def main(args):
     
     # Save processing steps
     if args.save_steps:
+        # Set image output height
         output_height = cfg['image']['img_steps_height']
+        # Set output filename
         steps_filename = os.path.join(args.output, cfg['image']['output_steps'])
+        # Save file
         save_steps(steps_filename, img_steps, output_height)
 
     # End measuring time
