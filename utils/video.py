@@ -5,8 +5,8 @@ import cv2
 from .image import check_if_adding_bboxes
 
 
-def delete_video(file):
-    return os.remove(file)
+def delete_file(filename):
+    return os.remove(filename)
     
     
 def make_temp_dir(file):
