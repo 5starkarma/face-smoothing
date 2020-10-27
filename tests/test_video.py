@@ -4,6 +4,7 @@ import tempfile
 
 from utils.video import delete_video
 
+
 class TestVideoFunctions(unittest.TestCase):
 
     def setUp(self):
