@@ -7,7 +7,7 @@ from .utils import video
 class TestVideoFunctions(unittest.TestCase):
 
     def setUp(self):
-        # Create a temp file
+        # Create a temp
         self.test_file = tempfile.TemporaryFile(prefix='TemporaryFile_', 
                                                 suffix='.mp4')
     def test_delete_video(self):
