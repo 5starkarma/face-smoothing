@@ -2,7 +2,7 @@ import unittest
 import shutil
 import tempfile
 
-from face-smoothing.utils.video import delete_video
+from .video import delete_video
 
 class TestVideoFunctions(unittest.TestCase):
 
