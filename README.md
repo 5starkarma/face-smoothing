@@ -1,4 +1,4 @@
-![alt text](https://travis-ci.org/5starkarma/face-smoothing.svg?branch=main "Build")
+[![Build Status](https://travis-ci.com/5starkarma/face-smoothing.svg?branch=main)](https://travis-ci.com/5starkarma/face-smoothing)
 
 # Face Smoothing: Detection and Beautification
 
