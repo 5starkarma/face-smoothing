@@ -3,10 +3,14 @@ language: python
 python:
   - "3.6"
   
-install: "pip install -r requirements.txt"
-
-script:
-  - pytest --cov=./
-  
+before_install:
+  - python --version
+  - pip install -U pip
+  - pip install -U pytest
+  - pip install codecov
+  - pip install -r requirements.txt
+install:
+  - pip install ".[test]" . # install package + test dependencies
+script: pytest # run tests
 after_success:
-  - codecov
+  - codecov # submit coverage
