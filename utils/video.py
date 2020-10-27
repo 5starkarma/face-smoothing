@@ -6,34 +6,50 @@ from .image import check_if_adding_bboxes
 
 
 def delete_file(filename):
-    return os.remove(filename)
-    
-    
-def make_temp_dir(file):
-    # Split file name and drop extension
-    basename = os.path.splitext(os.path.basename(file))[0]
-    # Create subdir with file name
-    temp_dir = os.path.join(file, basename)
-    # Check if dir already exits
-    if not os.path.isdir(temp_dir):
-        os.mkdir(temp_dir)
+    """
+    Removes file from system.
+
+    Parameters
+    ----------
+    filename : str 
+        Path to file
+    """
+    if os.path.isfile(filename):
+        return os.remove(filename)
 
 
-def split_video(file):
-    cap = cv2.VideoCapture(file)
+def split_video(filename):
+    """
+    Splits video into frames and appends to list.
+
+    Parameters
+    ----------
+    filename : str
+        Path to video file
+
+    Returns
+    -------
+    images : list
+        List of images
+    """
+    # Read video
+    cap = cv2.VideoCapture(filename)
+    # Make sure video is being read
     if cap.isOpened():
+        # If video is being read successfully
         success, frame = cap.read()
         images = []
         while success:
+            # Append frames to list
             images.append(frame)
+            # Read new frame
             success, frame = cap.read()
     return images
     
 
 def process_video(file, output_dir, cfg, net):
     """
-    Splits video into frames then processes each frame individually
-    before merging all the frames back into a video.
+    Processes each frame individually.
 
     Parameters
     ----------
@@ -73,7 +89,7 @@ def process_video(file, output_dir, cfg, net):
     video = cv2.VideoWriter(output_path, 
                             cv2.VideoWriter_fourcc(*'FMP4'), 
                             30, 
-                            (width,height))
+                            (width, height))
     for image in images:
         # Process frames
         _, _, _, _, _, output_w_bboxes, output_img = process_image(image, cfg, net)

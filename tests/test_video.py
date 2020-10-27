@@ -6,16 +6,23 @@ import mock
 from utils.video import delete_file
 
 
-class TestVideoFunctions(unittest.TestCase):
+class VideoTestCase(unittest.TestCase):
  
+    @mock.patch('utils.video.os.path')
     @mock.patch('utils.video.os')
-    def test_delete_file(self, mock_os):
+    def test_delete_file(self, mock_os, mock_path):
+        # Set up the mock
+        mock_path.isfile.return_value = False
+        # Delete file
         delete_file('any path')
-        # test that rm called os.remove with the right parameters
+        # Test that the delete call was not called.
+        self.assertFalse(mock_os.remove.called, "Failed to not remove the file if not present.")
+        # Make the file 'exist'
+        mock_path.isfile.return_value = True
+        # Delete file
+        delete_file('any path')
+        # Test that the delete call was called.
         mock_os.remove.assert_called_with('any path')
-
-    def test_make_temp_dir(self):
-        pass
 
     def test_split_video(self):
         pass
