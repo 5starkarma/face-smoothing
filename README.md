@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.com/5starkarma/face-smoothing.svg?branch=main)](https://travis-ci.com/5starkarma/face-smoothing)
+[![Build Status](https://travis-ci.com/5starkarma/face-smoothing.svg?branch=main)](https://travis-ci.com/5starkarma/face-smoothing) [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+
 
 # Face Smoothing: Detection and Beautification
 
