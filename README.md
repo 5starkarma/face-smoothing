@@ -1,3 +1,5 @@
+![alt text](https://travis-ci.org/5starkarma/face-smoothing.svg?branch=main "Build")
+
 # Face Smoothing: Detection and Beautification
 
 Input Image             |  Output Image w/ Facial Smoothing
