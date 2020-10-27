@@ -2,7 +2,7 @@ import unittest
 import shutil
 import tempfile
 
-from .video import delete_video
+from utils.video import delete_video
 
 class TestVideoFunctions(unittest.TestCase):
 
