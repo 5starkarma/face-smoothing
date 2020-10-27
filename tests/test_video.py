@@ -2,7 +2,7 @@ import unittest
 import shutil
 import tempfile
 
-from .utils import video
+from utils.video import delete_video
 
 class TestVideoFunctions(unittest.TestCase):
 
@@ -11,7 +11,7 @@ class TestVideoFunctions(unittest.TestCase):
         self.test_file = tempfile.TemporaryFile(prefix='TemporaryFile_', 
                                                 suffix='.mp4')
     def test_delete_video(self):
-        self.assertEqual(video.delete_video(self.test_file), None)
+        self.assertEqual(delete_video(self.test_file), None)
 
     def test_make_temp_dir(self):
         pass
