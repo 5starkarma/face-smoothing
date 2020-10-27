@@ -3,7 +3,8 @@ import shutil
 import tempfile
 import mock
 
-from utils.video import delete_file
+from utils.video import (delete_file,
+                         split_video)
 
 
 class VideoTestCase(unittest.TestCase):
@@ -24,7 +25,8 @@ class VideoTestCase(unittest.TestCase):
         # Test that the delete call was called.
         mock_os.remove.assert_called_with('any path')
 
-    def test_split_video(self):
+    def test_split_video(self, test_video_file):
+        # Take input filename and output list of np.arrays
         pass
 
     def test_process_video(self):

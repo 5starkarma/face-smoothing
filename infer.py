@@ -87,7 +87,7 @@ def main(args):
         # If file is a compatible video file
         if is_video(input_file):
             # Process video
-            process_video(input_file, args.output, cfg, net)
+            process_video(input_file, args, cfg, net)
 
         # If file is a compatible image file
         elif is_image(input_file):
@@ -111,7 +111,7 @@ def main(args):
                 # If file is a compatible video file
                 if is_video(file):
                     # Process video
-                    process_video(file, args.output, cfg, net)
+                    process_video(file, args, cfg, net)
                 # If file is a compatible image file    
                 if is_image(file):
                     # Load image

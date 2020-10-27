@@ -2,7 +2,9 @@ import os
 
 import cv2
 
-from .image import check_if_adding_bboxes
+from .image import (check_if_adding_bboxes, 
+                    check_img_size,
+                    process_image)
 
 
 def delete_file(filename):
@@ -45,9 +47,29 @@ def split_video(filename):
             # Read new frame
             success, frame = cap.read()
     return images
+
+
+def create_video_output_path(output_dir, cfg):
+    """
+    Creates file path, for video, which does not already exist.
+
+    Parameters
+    ----------
+    output_dir : str
+        Output directory
+    cfg : dict
+        Dictionary of project configurations
+    """
+    filename = os.path.join(output_dir, cfg['video']['output']) + '{}.mp4'
+    # If a file of this name exists increase the counter by 1
+    counter = 0
+    while os.path.isfile(filename.format(counter)):
+        counter += 1
+    # Apply counter to filename
+    return filename.format(counter)
     
 
-def process_video(file, output_dir, cfg, net):
+def process_video(filename, args, cfg, net):
     """
     Processes each frame individually.
 
@@ -74,27 +96,25 @@ def process_video(file, output_dir, cfg, net):
         Tuple of BGR images
     """
     # Split video into frames
-    images = split_video(file)
+    images = split_video(filename)
+    # Set output dir
+    output_dir = args.output
     # Add brackets and extension to filename
-    filename = os.path.join(output_dir, cfg['video']['output']) + '{}.mp4'
-    # If a file of this name exists increase the counter by 1
-    counter = 0
-    while os.path.isfile(filename.format(counter)):
-        counter += 1
-    # Apply counter to filename
-    output_path = filename.format(counter)
+    output_path = create_video_output_path(output_dir, cfg)
     # Get height and width of 1st image
     height, width, _  = check_img_size(images[0]).shape
     # Create VideoWriter object
     video = cv2.VideoWriter(output_path, 
                             cv2.VideoWriter_fourcc(*'FMP4'), 
-                            30, 
+                            cfg['video']['fps'], 
                             (width, height))
     for image in images:
         # Process frames
-        _, _, _, _, _, output_w_bboxes, output_img = process_image(image, cfg, net)
+        img_steps = process_image(image, cfg, net)
         # Check for --show-detections flag
-        output_img = check_if_adding_bboxes(args, img_steps)        
+        output_img = check_if_adding_bboxes(args, img_steps)       
+        # Write to video
+        video.write(output_img)    
     # Release video writer object
     video.release()
 

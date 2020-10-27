@@ -86,9 +86,9 @@ def process_image(input_img, cfg, net):
     # Detect face
     detected_img, bboxes = detect.detect_face(cfg, net, input_img)
     # Smooth face and return steps
-    output_img, roi_img, hsv_mask, smoothed_roi = smooth.smooth_face(cfg, 
-                                                              input_img, 
-                                                              bboxes)
+    output_img, roi_img, hsv_mask, smoothed_roi = smooth.smooth_face(cfg,
+                                                                     input_img, 
+                                                                     bboxes)
     # Draw bboxes on output_img
     output_w_bboxes = draw_bboxes(output_img, cfg, bboxes)
     return (input_img, detected_img, roi_img, hsv_mask, 
@@ -112,6 +112,32 @@ def load_image(path):
     return cv2.imread(path)
 
 
+def create_img_output_path(filename):
+    """
+    Checks if filename already exists and appends int to
+    end of path if path already exists.
+
+    Parameters
+    ----------
+    filename : str
+        Path to file.
+
+    Returns
+    -------
+    filename : str
+        Path to file which is confirmed to not exist yet.
+    """
+    counter = 0
+    # Add brackets and extension to filename
+    filename = filename + '{}.jpg'
+    # If a file of this name exists increase the counter by 1
+    while os.path.isfile(filename.format(counter)):
+        counter += 1
+    # Apply counter to filename
+    filename = filename.format(counter)
+    return filename.format(counter)
+
+
 def save_image(filename, img):
     """
     Save an image using OpenCV
@@ -130,15 +156,9 @@ def save_image(filename, img):
     Bool : bool
         True if image save was success
     """
-    counter = 0
-    # Add brackets and extension to filename
-    filename = filename + '{}.jpg'
-    # If a file of this name exists increase the counter by 1
-    while os.path.isfile(filename.format(counter)):
-        counter += 1
-    # Apply counter to filename
-    filename = filename.format(counter)
-    # Save file
+    # Create filename
+    filename = create_img_output_path(filename)
+    # Save image
     return cv2.imwrite(filename, img)
 
 
